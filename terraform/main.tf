@@ -10,7 +10,6 @@ terraform {
 provider "google" {
     project = var.gcp_project_id
     region = var.gcp_region
-    zone = var.gcp_zone
     credentials = file("${path.module}/.gcp/credentials.json")
 }
 
@@ -32,7 +31,7 @@ resource "google_compute_instance" "vm-easetravel-app" {
     }
 
     metadata_startup_script = file("${path.module}/scripts/install_app.sh")
-    tags = ["easetravel-app"]
+    tags = ["accesseasytravelweb"]
 }
 
 resource "google_compute_firewall" "firewall-easetravel-app" {
