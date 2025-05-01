@@ -9,10 +9,6 @@ echo "➡️ Instalando Apache (caso necessário)..."
 sudo apt update
 sudo apt install -y apache2
 
-echo "➡️ Criando diretório: $DATA_DIR"
-sudo mkdir -p "$DATA_DIR"
-sudo chmod -R 755 "$DATA_DIR"
-
 echo "➡️ Criando configuração Apache em: $CONF_FILE"
 cat <<EOF | sudo tee "$CONF_FILE" > /dev/null
 <VirtualHost *:${PORT}>
@@ -38,7 +34,4 @@ echo "➡️ Ativando site e reiniciando Apache"
 sudo a2ensite "${SITE_NAME}.conf"
 sudo systemctl restart apache2
 
-echo "➡️ Iniciando servidor HTTP Python na porta ${PORT}..."
-python3 -m http.server ${PORT} --directory "${DATA_DIR}" &
-
-echo "✅ Apache configurado e servidor HTTP Python rodando! Acesse em: http://<IP-DA-SUA-VM>:${PORT}/"
+echo "✅ Apache configurado! Acesse em: http://<IP-DA-SUA-VM>:${PORT}/"
