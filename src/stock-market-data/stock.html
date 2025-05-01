@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arquivos CSV - Dados Ibovespa</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        h1 {
+            color: #333;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            margin: 10px 0;
+        }
+        a {
+            text-decoration: none;
+            color: #0066cc;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h1>Shelldon / Tawan / Jefferson</h1>
+
+    <ul id="file-list"></ul>
+
+    <script>
+        fetch('.')
+            .then(response => response.text())
+            .then(html => {
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html');
+                const links = doc.querySelectorAll('a');
+                const ul = document.getElementById('file-list');
+
+                links.forEach(link => {
+                    const href = link.getAttribute('href');
+                    if(href.endsWith('.csv')) {
+                        const li = document.createElement('li');
+                        li.innerHTML = `<a href="${href}" download>${href}</a>`;
+                        ul.appendChild(li);
+                    } else {
+                        return;
+                    }
+                });
+            });
+    </script>
+</body>
+</html>
